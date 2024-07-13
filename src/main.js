@@ -11,19 +11,20 @@ const createWindow = () => {
     height: 768,
     webPreferences: {
       // preload: path.join(__dirname, "preload.js"),
-      nodeIntegration: true,
-      contextIsolation: false
+      // nodeIntegration: true,
     },
-    icon: path.join(__dirname, '../assets/reckonUp_256x256.ico')
+    icon: path.join(__dirname, './assets/reckonUp_256x256.ico')
   });
-  win.loadFile(path.join(__dirname, "../build/index.html"));
+  win.loadFile(path.join(__dirname, "./build/index.html"));
+  // win.loadURL("http://localhost:3000");
   win.removeMenu();
   win.setMinimumSize(1300, 750);
+  win.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
 
-  backend = spawn('node', [path.join(__dirname, '../backend/server.js')], { stdio: "overlapped" });
+  backend = spawn('node', ['src/backend/server.js']);
 
   backend.stdout.on('data', (data) => {
     console.log(`Backend: ${data}`);
@@ -59,3 +60,9 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 });
+
+
+// ipcMain.on('request-data', (event) => {
+//   const data = { message: 'Hello from main process!' };
+//   event.sender.send('response-data', data);
+// });

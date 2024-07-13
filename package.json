@@ -13,11 +13,10 @@
       "signingHashAlgorithms": [
         "sha256"
       ],
-      "icon": "src/resources/reckonUp_256x256.ico"
+      "icon": "assets/reckonUp_256x256.ico"
     },
     "files": [
       "src/**/*",
-      "backend**/*",
       "node_modules/**/*",
       "package.json"
     ],
