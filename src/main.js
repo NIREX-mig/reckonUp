@@ -5,6 +5,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { MongoClient } = require("mongodb");
 const sendForgotPasswordEmail = require("./sendEmail");
+const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
+
+log.transports.file.level = 'info';
+autoUpdater.logger = log;
 
 // common variables
 const URI = 'mongodb://localhost:27017/';
@@ -25,8 +30,10 @@ async function connectToDb() {
   await client.connect();
 }
 
+let win;
+
 const createWindow = () => {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     title: "ReckonUp (Developed By Nirex)",
     width: 1366,
     height: 768,
@@ -611,6 +618,8 @@ app.whenReady().then(() => {
 
   createWindow();
 
+  autoUpdater.checkForUpdatesAndNotify();
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()
@@ -623,6 +632,30 @@ app.whenReady().then(() => {
 }).catch((error) => {
   console.log(error)
 })
+
+autoUpdater.on('update-available', () => {
+  log.info('Update available.');
+});
+
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  log.info('Update downloaded.');
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Restart', 'Later'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+  };
+
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    if (returnValue.response === 0) autoUpdater.quitAndInstall();
+  });
+});
+
+autoUpdater.on('error', (message) => {
+  log.error('There was a problem updating the application');
+  log.error(message);
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

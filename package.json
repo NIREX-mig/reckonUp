@@ -19,6 +19,13 @@
       "src/**/*",
       "node_modules/**/*",
       "package.json"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "your-github-username",
+        "repo": "your-repo-name"
+      }
     ]
   },
   "author": "Nirex",
@@ -30,6 +37,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "electron-updater": "^6.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "mongoose-aggregate-paginate-v2": "^1.1.1",
