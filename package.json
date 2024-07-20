@@ -1,5 +1,5 @@
 {
-  "name": "reckonUp",
+  "name": "reckonup",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
@@ -13,21 +13,12 @@
       "signingHashAlgorithms": [
         "sha256"
       ],
-      "icon": "assets/reckonUp_256x256.ico"
+      "icon": "src/assets/reckonUp_256x256.ico"
     },
     "files": [
       "src/**/*",
       "node_modules/**/*",
       "package.json"
-    ],
-    "extraResources": [
-      {
-        "from": "backend/",
-        "to": "backend",
-        "filter": [
-          "**/*"
-        ]
-      }
     ]
   },
   "author": "Nirex",
@@ -39,14 +30,9 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.5",
+    "mongodb": "^6.8.0",
     "mongoose-aggregate-paginate-v2": "^1.1.1",
-    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14"
   }
 }

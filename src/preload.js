@@ -13,6 +13,14 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.send(channel, data);
   },
   receive: (channel, func) => {
-    ipcRenderer.on(channel, (event, ...args) => func(...args));
+    ipcRenderer.on(channel, (event, ...args) => {
+      func(...args);
+    })
+  },
+  // remove: (channel) => {
+  //   ipcRenderer.removeListener(channel)
+  // },
+  removeAll: (channel) => {
+    ipcRenderer.removeAllListeners(channel);
   }
 });
